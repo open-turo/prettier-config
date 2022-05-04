@@ -1,0 +1,28 @@
+{
+  "name": "@turo/prettier-config",
+  "version": "2.1.0",
+  "description": "Turo prettier config",
+  "author": "Turo engineering <engineering@turo.com>",
+  "homepage": "https://github.com/turo/prettier-config#readme",
+  "license": "MIT",
+  "main": "index.json",
+  "peerDependencies": {
+    "prettier": "^2.5.1"
+  },
+  "publishConfig": {
+    "registry": "https://turo.jfrog.io/turo/api/npm/npm/"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.0",
+    "prettier": "^2.5.1",
+    "semantic-release": "^19.0.2"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "git:pre-commit": "yarn lint-staged"
+  }
+}
