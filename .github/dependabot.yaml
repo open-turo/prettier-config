@@ -1,0 +1,16 @@
+version: 2
+registries:
+  turo-npm:
+    type: npm-registry
+    url: https://turo.jfrog.io/turo/api/npm/npm/
+    username: "${{secrets.DEPENDABOT_JFROG_USERNAME}}"
+    password: "${{secrets.DEPENDABOT_JFROG_PASSWORD}}"
+
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 20
+    registries:
+      - turo-npm

@@ -1,0 +1,53 @@
+name: Release
+on:
+  push:
+    branches: [main]
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup actionLint
+        uses: KeisukeYamashita/setup-release@v1
+        with:
+          repository: rhysd/actionlint
+      - name: Pre-commit
+        uses: open-turo/action-pre-commit@v1
+  release:
+    name: Release
+    needs: [lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup tools
+        uses: open-turo/action-setup-tools@v1
+
+      - name: Create .npmrc
+        run: |
+          {
+            echo "@turo:registry=https://turo.jfrog.io/turo/api/npm/npm/"
+            echo "//turo.jfrog.io/turo/api/npm/npm/:_auth=${{ secrets.ARTIFACTORY_NPM_AUTH_TOKEN }}"
+            echo "//turo.jfrog.io/turo/api/npm/npm/:username=${{ secrets.ARTIFACTORY_USERNAME }}"
+            echo "//turo.jfrog.io/turo/api/npm/npm/:always-auth=true"
+            echo "@privicy:registry=https://npm.pkg.github.com"
+          } > .npmrc
+
+      - name: Yarn
+        run: yarn
+
+      - name: Update config
+        run: npm config set unsafe-perm true
+
+      - name: Release
+        run: yarn semantic-release
+        env:
+          CI: "true"
+          GITHUB_TOKEN: ${{ secrets.ROLLSBOT_GITHUB_ACTIONS_TOKEN }}
