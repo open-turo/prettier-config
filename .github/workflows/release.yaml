@@ -50,4 +50,4 @@ jobs:
         run: yarn semantic-release
         env:
           CI: "true"
-          GITHUB_TOKEN: ${{ secrets.ROLLSBOT_GITHUB_ACTIONS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.OPEN_TURO_GITHUB_TOKEN }}
