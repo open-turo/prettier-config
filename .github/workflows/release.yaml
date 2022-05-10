@@ -51,3 +51,4 @@ jobs:
         env:
           CI: "true"
           GITHUB_TOKEN: ${{ secrets.OPEN_TURO_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.OPEN_TURO_NPM_TOKEN }}
